@@ -1,0 +1,47 @@
+https://neetcode.io/problems/duplicate-integer
+
+Sorting solution space O(1) time O(nlogn)
+class Solution {
+public:
+    bool hasDuplicate(vector<int>& nums) {
+        if (nums.size() == 0) return false;
+        sort(nums.begin(),nums.end());
+        for (int i = 0; i < nums.size() - 1; i++) {
+            if (nums[i] == nums[i+1]) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+###########################################################################
+
+hashset solution space O(n) time O(n)
+class Solution {
+public:
+    bool hasDuplicate(vector<int>& nums) {
+        unordered_set<int> unique(nums.begin(), nums.end());
+        return unique.size() != nums.size();
+    }
+};
+
+###########################################################################
+hashmap solution space O(n) time O(n)
+class Solution {
+public:
+    bool hasDuplicate(vector<int>& nums) {
+        unordered_map<int, int> freq_count;
+        for (int i : nums) {
+            freq_count[i]++;
+        }
+
+        for (pair<int,int> i : freq_count) {
+            if (i.second > 1) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
