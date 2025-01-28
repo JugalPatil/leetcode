@@ -1,0 +1,57 @@
+https://neetcode.io/problems/two-integer-sum
+
+/* hashmap solution space O(n) time O(n) */
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> nums_index;
+
+        for (int i = 0; i < nums.size(); i++) {
+            int num = target - nums[i];
+            if (nums_index.find(num) != nums_index.end()) {
+                return {nums_index[num], i};
+            } else {
+                nums_index[nums[i]] = i;
+            }
+        }
+
+        return {};
+    }
+};
+
+###########################################################################
+
+/* two pointer solution space O(n) time O(n) */
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<pair<int,int>> nums_index;
+        int left = 0;
+        int right = nums.size() - 1;
+
+        for (int i = 0; i < nums.size(); i++) {
+            nums_index.push_back({nums[i], i});
+        }
+
+        sort(nums_index.begin(), nums_index.end());
+
+        while (left < right) {
+            int sum = nums_index[left].first + nums_index[right].first;
+            if (sum == target) {
+                int index1 = nums_index[left].second;
+                int index2 = nums_index[right].second;
+                if (index1 > index2) {
+                    return {index2, index1};
+                } else {
+                    return {index1, index2};
+                }
+            } else if (sum > target) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+
+        return {};
+    }
+};
